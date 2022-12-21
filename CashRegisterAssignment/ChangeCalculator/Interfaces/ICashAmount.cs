@@ -13,5 +13,7 @@ namespace CashRegisterAssignment.ChangeCalculator.Interfaces
     {
         public int Quantity { get; set; }
         public decimal Denomination { get; set; }
+
+        public ICashAmount SetCashAmountData(int quantity, decimal denomination);
     }
 }

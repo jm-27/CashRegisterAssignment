@@ -9,6 +9,8 @@ namespace CashRegisterAssignmentTests
     {
         public ServiceProvider serviceProvider { get; set; }
         public List<CurrencyItem> currenciesCollection { get; set; }
+
+        public ICashAmount CashAmount { get; set; }
         public TestFixtures()
         {
 
@@ -17,16 +19,16 @@ namespace CashRegisterAssignmentTests
             .Build();
             currenciesCollection = Configuration.GetSection("CurrenciesCollection").Get<List<CurrencyItem>>();
 
-
             var builder = new ConfigurationBuilder();
             builder.AddJsonFile("appsettings.json");
             var configRoot = builder.Build();
-
+            
             var services = new ServiceCollection();
             services.AddTransient<IChangeCalculatorService, ChangeCalculatorService>();
             services.AddTransient<ICurrencyStore, CurrencyStore>();
             services.AddTransient<IChangeCalculator, ChangeCalculator>();
             services.AddTransient<ICashWrapper>(p => new CashWrapper(ICashWrapper.Status.Initial, "", null));
+            services.AddTransient<ICashAmount>(p => new CashAmount(0, 0.00m));
             services.AddTransient<IChangeCalculatorLogService<ChangeCalculator>, ChangeCalculatorLogService<ChangeCalculator>>();
             services.AddLogging(configure =>
             {
@@ -36,6 +38,8 @@ namespace CashRegisterAssignmentTests
                 configure.AddConsole();
             }).AddTransient<ChangeCalculator>();
             serviceProvider = services.BuildServiceProvider(true);
+
+            CashAmount = new CashAmount(0, 0.00m);
         }
     }
 

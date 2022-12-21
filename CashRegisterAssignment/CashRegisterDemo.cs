@@ -26,9 +26,11 @@ namespace CashRegisterAssignment
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             .Build();
         IChangeCalculator _changeCalculator;
-        public CashRegisterDemo(IChangeCalculator changeCalculator)
+        ICashAmount _cashAmount;
+        public CashRegisterDemo(IChangeCalculator changeCalculator, ICashAmount cashAmount)
         {
-            _changeCalculator = changeCalculator; ;
+            _changeCalculator = changeCalculator; 
+            _cashAmount = cashAmount;
         }
 
         /// <summary>
@@ -72,6 +74,10 @@ namespace CashRegisterAssignment
                     {
                         priceList.Add(price);
                     }
+                    else
+                    {
+                        Console.WriteLine("Not a valid input. Price must be an integer or a decimal. Try again.");
+                    }
                 }
                 i++;
             } while (res != "x");
@@ -88,6 +94,10 @@ namespace CashRegisterAssignment
                     {
                         quantity = qty;
                     }
+                    else
+                    {
+                        Console.WriteLine("Not a valid input. Quantity must be an integer. Try again.");
+                    }
                     Console.WriteLine("Denomination: ");
                     res = Console.ReadLine();
                     if (res != "x")
@@ -95,7 +105,11 @@ namespace CashRegisterAssignment
                         bool isNumberDenomination = decimal.TryParse(res, out decimal denomination);
                         if (isNumberDenomination)
                         {
-                            cashAmounts.Add(new CashAmount() { Quantity = quantity, Denomination = denomination });
+                            cashAmounts.Add(_cashAmount.SetCashAmountData(quantity, denomination));
+                        }
+                        else
+                        {
+                            Console.WriteLine("Not a valid input. Denomination must be an integer or a decimal. Try again.");
                         }
                     }
                 }

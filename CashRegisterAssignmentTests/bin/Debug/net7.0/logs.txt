@@ -114,3 +114,23 @@ CashRegisterAssignment.ChangeCalculator.CustomExceptions.InsufficientCashExcepti
 CashRegisterAssignment.ChangeCalculator.CustomExceptions.IncorrectMoneyInputException: Invalid cash input 6.00
    at CashRegisterAssignment.ChangeCalculator.Services.ChangeCalculatorService.set_CashCollection(List`1 value) in C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\ChangeCalculator\Services\ChangeCalculatorService.cs:line 81
    at CashRegisterAssignment.ChangeCalculator.ChangeCalculator.SubmitCash(List`1 ItemsPrices, List`1 cashAmounts) in C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\ChangeCalculator\ChangeCalculator.cs:line 86
+2022-12-21 08:13:13.999 -07:00 [WRN] Insufficient cash.
+CashRegisterAssignment.ChangeCalculator.CustomExceptions.InsufficientCashException: Insufficient cash. Deficit of $0.75 remains.
+   at CashRegisterAssignment.ChangeCalculator.ChangeCalculator.SubmitCash(List`1 ItemsPrices, List`1 cashAmounts) in C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\ChangeCalculator\ChangeCalculator.cs:line 102
+2022-12-21 08:13:14.031 -07:00 [ERR] Unable to set active currency. See exception details. 
+System.Collections.Generic.KeyNotFoundException: The given key 'XYZ' was not present in the dictionary.
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at CashRegisterAssignment.ChangeCalculator.Services.ChangeCalculatorService.SetActiveCurrency(String activeCurrencyName) in C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\ChangeCalculator\Services\ChangeCalculatorService.cs:line 42
+2022-12-21 08:13:14.037 -07:00 [ERR] Currency Denomination not found.
+2022-12-21 08:13:14.038 -07:00 [ERR] Invalid cash input.
+CashRegisterAssignment.ChangeCalculator.CustomExceptions.IncorrectMoneyInputException: Invalid cash input 70.00
+   at CashRegisterAssignment.ChangeCalculator.Services.ChangeCalculatorService.set_CashCollection(List`1 value) in C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\ChangeCalculator\Services\ChangeCalculatorService.cs:line 81
+   at CashRegisterAssignment.ChangeCalculator.ChangeCalculator.SubmitCash(List`1 ItemsPrices, List`1 cashAmounts) in C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\ChangeCalculator\ChangeCalculator.cs:line 88
+2022-12-21 08:13:14.040 -07:00 [WRN] Insufficient cash.
+CashRegisterAssignment.ChangeCalculator.CustomExceptions.InsufficientCashException: Insufficient cash. Deficit of $5.25 remains.
+   at CashRegisterAssignment.ChangeCalculator.ChangeCalculator.SubmitCash(List`1 ItemsPrices, List`1 cashAmounts) in C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\ChangeCalculator\ChangeCalculator.cs:line 102
+2022-12-21 08:13:14.040 -07:00 [ERR] Currency Denomination not found.
+2022-12-21 08:13:14.040 -07:00 [ERR] Invalid cash input.
+CashRegisterAssignment.ChangeCalculator.CustomExceptions.IncorrectMoneyInputException: Invalid cash input 6.00
+   at CashRegisterAssignment.ChangeCalculator.Services.ChangeCalculatorService.set_CashCollection(List`1 value) in C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\ChangeCalculator\Services\ChangeCalculatorService.cs:line 81
+   at CashRegisterAssignment.ChangeCalculator.ChangeCalculator.SubmitCash(List`1 ItemsPrices, List`1 cashAmounts) in C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\ChangeCalculator\ChangeCalculator.cs:line 88

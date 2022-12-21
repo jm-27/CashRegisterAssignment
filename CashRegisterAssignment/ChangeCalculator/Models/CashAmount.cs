@@ -15,5 +15,16 @@ namespace CashRegisterAssignment.ChangeCalculator.Models
     {
         public int Quantity { get; set; }
         public decimal Denomination { get; set; }
+
+        public CashAmount(int quantity, decimal denomination)
+        {
+            Quantity= quantity;
+            Denomination= denomination;
+        }
+
+        public ICashAmount SetCashAmountData(int quantity, decimal denomination)
+        {
+            return new CashAmount(quantity, denomination);
+        }
     }
 }

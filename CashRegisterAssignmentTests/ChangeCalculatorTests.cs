@@ -11,10 +11,12 @@ namespace CashRegisterAssignmentTests
     {
         private ServiceProvider _serviceProvider;
         List<CurrencyItem> currenciesCollection;
+        public ICashAmount _cashAmount;
         public ChangeCalculatorTests(TestFixtures testFixtures)
         {
             _serviceProvider = testFixtures.serviceProvider;
             currenciesCollection = testFixtures.currenciesCollection;
+            _cashAmount = testFixtures.CashAmount;
 
         }
 
@@ -28,16 +30,16 @@ namespace CashRegisterAssignmentTests
             List<decimal> priceList = new List<decimal>() { 15.00m, 0.26m };
 
             List<ICashAmount> cashAmounts = new List<ICashAmount>();
-            cashAmounts.Add(new CashAmount() { Quantity = 2, Denomination = 10.00m });
-            cashAmounts.Add(new CashAmount() { Quantity = 1, Denomination = 0.50m });
+            cashAmounts.Add(_cashAmount.SetCashAmountData(2,  10.00m ));
+            cashAmounts.Add(_cashAmount.SetCashAmountData(1, 0.50m ));
 
             ICashWrapper result =
                 _changeCalculator.SubmitCash(priceList, cashAmounts);
 
             List<ICashAmount> expectedCashAmounts = new List<ICashAmount>();
-            expectedCashAmounts.Add(new CashAmount() { Quantity = 1, Denomination = 5.00m });
-            expectedCashAmounts.Add(new CashAmount() { Quantity = 2, Denomination = 0.10m });
-            expectedCashAmounts.Add(new CashAmount() { Quantity = 4, Denomination = 0.01m });
+            expectedCashAmounts.Add(_cashAmount.SetCashAmountData(1, 5.00m ));
+            expectedCashAmounts.Add(_cashAmount.SetCashAmountData(2,  0.10m));
+            expectedCashAmounts.Add(_cashAmount.SetCashAmountData(4, 0.01m ));
 
             ICashWrapper cashWrapper = new CashWrapper(ICashWrapper.Status.Valid, _changeCalculator.GetActiveCurrency(), expectedCashAmounts);
 
@@ -54,15 +56,15 @@ namespace CashRegisterAssignmentTests
             List<decimal> priceList = new List<decimal>() { 5.00m, 5.00m, 0.25m, 5.00m };
 
             List<ICashAmount> cashAmounts = new List<ICashAmount>();
-            cashAmounts.Add(new CashAmount() { Quantity = 1, Denomination = 10.00m });
-            cashAmounts.Add(new CashAmount() { Quantity = 1, Denomination = 5.00m });
-            cashAmounts.Add(new CashAmount() { Quantity = 1, Denomination = 0.25m });
+            cashAmounts.Add(_cashAmount.SetCashAmountData(1,  10.00m ));
+            cashAmounts.Add(_cashAmount.SetCashAmountData(1,  5.00m ));
+            cashAmounts.Add(_cashAmount.SetCashAmountData(1,  0.25m ));
 
             ICashWrapper result =
                 _changeCalculator.SubmitCash(priceList, cashAmounts);
 
             List<ICashAmount> expectedCashAmounts = new List<ICashAmount>();
-            expectedCashAmounts.Add(new CashAmount() { Quantity = 0, Denomination = 0.00m });
+            expectedCashAmounts.Add(_cashAmount.SetCashAmountData(0,  0.00m));
 
             ICashWrapper cashWrapper = new CashWrapper(ICashWrapper.Status.Valid, _changeCalculator.GetActiveCurrency(), expectedCashAmounts);
 
@@ -79,7 +81,7 @@ namespace CashRegisterAssignmentTests
             List<decimal> priceList = new List<decimal>() { 5.00m, 5.00m, 0.25m, 5.00m };
 
             List<ICashAmount> cashAmounts = new List<ICashAmount>();
-            cashAmounts.Add(new CashAmount() { Quantity = 1, Denomination = 10.00m });
+            cashAmounts.Add(_cashAmount.SetCashAmountData(1, 10.00m));
 
             ICashWrapper result =
                 _changeCalculator.SubmitCash(priceList, cashAmounts);
@@ -97,7 +99,7 @@ namespace CashRegisterAssignmentTests
             List<decimal> priceList = new List<decimal>() { 5.00m };
 
             List<ICashAmount> cashAmounts = new List<ICashAmount>();
-            cashAmounts.Add(new CashAmount() { Quantity = 1, Denomination = 6.00m });
+            cashAmounts.Add(_cashAmount.SetCashAmountData(1, 6.00m));
 
             ICashWrapper result =
             _changeCalculator.SubmitCash(priceList, cashAmounts);
@@ -116,7 +118,7 @@ namespace CashRegisterAssignmentTests
             List<decimal> priceList = new List<decimal>() { 20.00m, 5.00m, 0.50m };
 
             List<ICashAmount> cashAmounts = new List<ICashAmount>();
-            cashAmounts.Add(new CashAmount() { Quantity = 1, Denomination = 50.00m });
+            cashAmounts.Add(_cashAmount.SetCashAmountData( 1,  50.00m ));
 
 
             ICashWrapper result =
@@ -124,9 +126,9 @@ namespace CashRegisterAssignmentTests
 
 
             List<ICashAmount> expectedCashAmounts = new List<ICashAmount>();
-            expectedCashAmounts.Add(new CashAmount() { Quantity = 1, Denomination = 20.00m });
-            expectedCashAmounts.Add(new CashAmount() { Quantity = 2, Denomination = 2.00m });
-            expectedCashAmounts.Add(new CashAmount() { Quantity = 1, Denomination = 0.50m });
+            expectedCashAmounts.Add(_cashAmount.SetCashAmountData(1,  20.00m ));
+            expectedCashAmounts.Add(_cashAmount.SetCashAmountData(2, 2.00m ));
+            expectedCashAmounts.Add(_cashAmount.SetCashAmountData( 1,  0.50m ));
 
             ICashWrapper cashWrapper = new CashWrapper(ICashWrapper.Status.Valid, _changeCalculator.GetActiveCurrency(), expectedCashAmounts);
 
@@ -143,17 +145,17 @@ namespace CashRegisterAssignmentTests
             List<decimal> priceList = new List<decimal>() { 50.00m, 25.00m, 17.25m };
 
             List<ICashAmount> cashAmounts = new List<ICashAmount>();
-            cashAmounts.Add(new CashAmount() { Quantity = 1, Denomination = 50.00m });
-            cashAmounts.Add(new CashAmount() { Quantity = 2, Denomination = 20.00m });
-            cashAmounts.Add(new CashAmount() { Quantity = 1, Denomination = 2.00m });
-            cashAmounts.Add(new CashAmount() { Quantity = 1, Denomination = 0.20m });
-            cashAmounts.Add(new CashAmount() { Quantity = 1, Denomination = 0.05m });
+            cashAmounts.Add(_cashAmount.SetCashAmountData(1,  50.00m ));
+            cashAmounts.Add(_cashAmount.SetCashAmountData(2, 20.00m));
+            cashAmounts.Add(_cashAmount.SetCashAmountData(1,  2.00m ));
+            cashAmounts.Add(_cashAmount.SetCashAmountData(1,  0.20m ));
+            cashAmounts.Add(_cashAmount.SetCashAmountData(1,  0.05m ));
 
             ICashWrapper result =
                 _changeCalculator.SubmitCash(priceList, cashAmounts);
 
             List<ICashAmount> expectedCashAmounts = new List<ICashAmount>();
-            expectedCashAmounts.Add(new CashAmount() { Quantity = 0, Denomination = 0.00m });
+            expectedCashAmounts.Add(_cashAmount.SetCashAmountData(0, 0.00m ));
 
             ICashWrapper cashWrapper = new CashWrapper(ICashWrapper.Status.Valid, _changeCalculator.GetActiveCurrency(), expectedCashAmounts);
 
@@ -170,7 +172,7 @@ namespace CashRegisterAssignmentTests
             List<decimal> priceList = new List<decimal>() { 105.00m, 15.75m };
 
             List<ICashAmount> cashAmounts = new List<ICashAmount>();
-            cashAmounts.Add(new CashAmount() { Quantity = 12, Denomination = 10.00m });
+            cashAmounts.Add(_cashAmount.SetCashAmountData(12, 10.00m ));
 
             ICashWrapper result =
                 _changeCalculator.SubmitCash(priceList, cashAmounts);
@@ -188,7 +190,7 @@ namespace CashRegisterAssignmentTests
             List<decimal> priceList = new List<decimal>() { 50.00m, 20.00m };
 
             List<ICashAmount> cashAmounts = new List<ICashAmount>();
-            cashAmounts.Add(new CashAmount() { Quantity = 1, Denomination = 70.00m });
+            cashAmounts.Add(_cashAmount.SetCashAmountData( 1, 70.00m ));
 
             ICashWrapper result =
                 _changeCalculator.SubmitCash(priceList, cashAmounts);

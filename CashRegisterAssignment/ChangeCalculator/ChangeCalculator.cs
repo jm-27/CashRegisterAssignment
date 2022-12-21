@@ -9,13 +9,15 @@ namespace CashRegisterAssignment.ChangeCalculator
     {
         IChangeCalculatorService _changeCalculatorService;
         ICashWrapper _cashWrapper;
+        ICashAmount _cashAmount;
         IChangeCalculatorLogService<ChangeCalculator> _logService;
-        
+
         public ChangeCalculator(IChangeCalculatorService changeCalculatorService,
-            IChangeCalculatorLogService<ChangeCalculator> logService, ICashWrapper cashWrapper)
+            IChangeCalculatorLogService<ChangeCalculator> logService, ICashWrapper cashWrapper, ICashAmount cashAmount)
         {
             _changeCalculatorService = changeCalculatorService;
-            _cashWrapper =  cashWrapper; ;
+            _cashWrapper = cashWrapper; ;
+            _cashAmount = cashAmount;
             _logService = logService;
         }
 
@@ -80,7 +82,7 @@ namespace CashRegisterAssignment.ChangeCalculator
         /// <exception cref="IncorrectMoneyInputException"></exception>
         public ICashWrapper SubmitCash(List<decimal> ItemsPrices, List<ICashAmount> cashAmounts)
         {
-            
+
             try
             {
                 _changeCalculatorService.CashCollection = cashAmounts;
@@ -93,11 +95,11 @@ namespace CashRegisterAssignment.ChangeCalculator
                     }
                     else if (cashToReturn == 0)
                     {
-                        return _cashWrapper.SetCashWrapperData(ICashWrapper.Status.Valid, GetActiveCurrency(), new List<ICashAmount>() { new CashAmount() { Quantity = 0, Denomination = 0.00m } });
+                        return _cashWrapper.SetCashWrapperData(ICashWrapper.Status.Valid, GetActiveCurrency(), new List<ICashAmount>() { _cashAmount.SetCashAmountData(0, 0.00m) });
                     }
                     else
-                    {                        
-                        throw new InsufficientCashException($"Insufficient cash. Deficit of ${Math.Abs(cashToReturn)} remains.");                        
+                    {
+                        throw new InsufficientCashException($"Insufficient cash. Deficit of ${Math.Abs(cashToReturn)} remains.");
                     }
                 }
                 else
@@ -107,7 +109,7 @@ namespace CashRegisterAssignment.ChangeCalculator
             }
             catch (InsufficientCashException ex)
             {
-                _logService.AddLog(IChangeCalculatorLogService<ChangeCalculator>.Level.Warning, "Insufficient cash.",ex);
+                _logService.AddLog(IChangeCalculatorLogService<ChangeCalculator>.Level.Warning, "Insufficient cash.", ex);
                 return _cashWrapper.SetCashWrapperData(ICashWrapper.Status.InsufficientCash, GetActiveCurrency(), null);
             }
             catch (IncorrectMoneyInputException ex)
@@ -115,7 +117,7 @@ namespace CashRegisterAssignment.ChangeCalculator
                 _logService.AddLog(IChangeCalculatorLogService<ChangeCalculator>.Level.Error, "Invalid cash input.", ex);
                 return _cashWrapper.SetCashWrapperData(ICashWrapper.Status.InvalidInput, GetActiveCurrency(), null);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logService.AddLog(IChangeCalculatorLogService<ChangeCalculator>.Level.Error, "Exception raised. See exception details.", ex);
                 return _cashWrapper.SetCashWrapperData(ICashWrapper.Status.Invalid, GetActiveCurrency(), null);
@@ -146,11 +148,10 @@ namespace CashRegisterAssignment.ChangeCalculator
                 try
                 {
                     denomination = denominationList.Where(x => amountToCash - x >= 0).FirstOrDefault();
-                    cashToReturn.Add(new CashAmount
-                    {
-                        Quantity = (int)Math.Floor(amountToCash / denomination),
-                        Denomination = denomination
-                    });
+                    cashToReturn.Add(_cashAmount.SetCashAmountData(
+                        (int)Math.Floor(amountToCash / denomination),
+                         denomination
+                    ));
                     amountToCash -= denomination * (int)Math.Floor(amountToCash / denomination);
                 }
                 catch (Exception)

@@ -19,6 +19,7 @@ services.AddTransient<IChangeCalculatorService, ChangeCalculatorService>();
 services.AddTransient<ICurrencyStore, CurrencyStore>();
 services.AddTransient<IChangeCalculator, ChangeCalculator>();
 services.AddTransient<ICashWrapper>(p => new CashWrapper(ICashWrapper.Status.Initial,"",null));
+services.AddTransient<ICashAmount>(p => new CashAmount(0,0.00m));
 services.AddTransient<IChangeCalculatorLogService<ChangeCalculator>, ChangeCalculatorLogService<ChangeCalculator>>();
 services.AddSingleton<CashRegisterDemo>();
 
@@ -31,10 +32,7 @@ services.AddLogging(configure =>
     configure.AddConsole();    
 }).AddTransient<ChangeCalculator>();
 
-
-
 var _serviceProvider = services.BuildServiceProvider(true);
-
 
 //Starts the demonstration application.
 IServiceScope scope = _serviceProvider.CreateScope();
