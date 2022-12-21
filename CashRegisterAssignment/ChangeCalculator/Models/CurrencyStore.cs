@@ -17,14 +17,20 @@ namespace CashRegisterAssignment.ChangeCalculator.Models
     {
         public Dictionary<string, List<decimal>> availableCurrencies { get; set; }
 
-        public void SetStoreCurrenciesCollection(List<KeyValuePair<string, List<decimal[]>>> currenciesCollection)
+        /// <summary>
+        /// Orders in descending order each of the Currency Denomination set and
+        /// adds the Currency set to the Available Catalog of Currencies.
+        /// </summary>
+        /// <param name="currenciesCollection"></param>
+        /// <exception cref="CurrencyDataNotPresentException"></exception>
+        public void SetStoreCurrenciesCollection(List<CurrencyItem> currenciesCollection)
         {
             try
             {
                 availableCurrencies = new Dictionary<string, List<decimal>>();
-                foreach (KeyValuePair<string, List<decimal[]>> item in currenciesCollection)
+                foreach (CurrencyItem item in currenciesCollection)
                 {
-                    availableCurrencies.Add(item.Key, item.Value.FirstOrDefault().OrderByDescending(x => x).ToList());
+                    availableCurrencies.Add(item.CurrencyName, item.CurrencyDenominations.OrderByDescending(x => x).ToList());
                 }
 
             }

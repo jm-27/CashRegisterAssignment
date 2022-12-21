@@ -11,12 +11,14 @@ namespace CashRegisterAssignment
 {
     /// <summary>
     /// This is the Demonstration Application.
-    /// It contains two ready to use scenarios:
-    /// 1.- Run the demo app with previously loaded data: Price List and Cash recieved for 
-    ///     submitting.
-    /// 2.- Step by step scenario for creating your own price list and your one cash collection.
-    /// 
-    /// 
+    /// It contains a ready to use scenario:
+    /// 1.- Run the demo app step by step for creating your own price list and your one cash collection.
+    /// 2.- Input your price list and press x to continue
+    /// 3.- Input your cash amount and press x to continue
+    /// 4.- The app will process the submitted prices and cash collection
+    /// 5.- The app will return a result based on the input taken.
+    /// It includes Microsoft Extension Logging + SeriLog for logging messages and errors into console and into text file.
+    /// Text file can be found in the bin folder under the name logs.txt.
     /// </summary>
     internal class CashRegisterDemo
     {
@@ -38,8 +40,8 @@ namespace CashRegisterAssignment
         public void Run()
         {
             string currency = Configuration.GetValue<string>("ChangeCalculatorSettings:ActiveCurrency");
-            List<KeyValuePair<string, List<decimal[]>>> currenciesCollection = Configuration.GetSection("CurrenciesCollection").Get<Dictionary<string, List<decimal[]>>>().ToList();
-
+            List<CurrencyItem> currenciesCollection = Configuration.GetSection("CurrenciesCollection").Get<List<CurrencyItem>>();
+            
             List<decimal> priceList;
             List<ICashAmount> cashAmounts = new List<ICashAmount>();
 
@@ -101,13 +103,36 @@ namespace CashRegisterAssignment
             } while (res != "x");
 
 
-            List<ICashAmount> result = _changeCalculator.SubmitCash(priceList, cashAmounts);
+            ICashWrapper result = _changeCalculator.SubmitCash(priceList, cashAmounts);
 
-            Console.WriteLine("Cash Returned:");
-            foreach (var item in result)
+            switch (((CashWrapper)result).Status)
             {
-                Console.WriteLine($"Quantity: {item.Quantity} - Denomination: {item.Denomination}");
+                case ICashWrapper.Status.Valid:
+                    {
+                        Console.WriteLine("Cash Returned:");
+                        foreach (var item in result.CashAmount)
+                        {
+                            Console.WriteLine($"Quantity: {item.Quantity} - Denomination: {item.Denomination}");
+                        }
+                        break;
+                    }
+                case ICashWrapper.Status.InsufficientCash:
+                    {
+                        Console.WriteLine("Not Enough Cash For This Operation.");                        
+                        break;
+                    }
+                case ICashWrapper.Status.InvalidInput:
+                    {
+                        Console.WriteLine("Invalid Input: Invalid Denomination.");
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+
             }
+
             Console.WriteLine();
             Console.WriteLine("<<Cash Register Assignment End>>");
         }

@@ -1,5 +1,6 @@
 ﻿using CashRegisterAssignment.ChangeCalculator.CustomExceptions;
 using CashRegisterAssignment.ChangeCalculator.Interfaces;
+using CashRegisterAssignment.ChangeCalculator.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,16 +12,19 @@ namespace CashRegisterAssignment.ChangeCalculator.Services
     public class ChangeCalculatorService: IChangeCalculatorService
     {
         (string Name, List<decimal> Denominations) activeCurrency;
-        ICurrencyStore _currencyStore;
+        ICurrencyStore _currencyStore;       
         public bool isValid { get; set; }
-        private List<ICashAmount> cashCollection;
-        public ChangeCalculatorService(ICurrencyStore currencyStore)
+        private List<ICashAmount> cashCollection = new List<ICashAmount>();
+        private readonly IChangeCalculatorLogService<ChangeCalculator> _logService;
+        public ChangeCalculatorService(ICurrencyStore currencyStore,
+            IChangeCalculatorLogService<ChangeCalculator> logService)
         {
             _currencyStore = currencyStore;
+            _logService = logService;
             isValid = false;
         }
         
-        public void SetCurrencyStoreCollection(List<KeyValuePair<string, List<decimal[]>>> currencyCollection)
+        public void SetCurrencyStoreCollection(List<CurrencyItem> currencyCollection)
         {
             _currencyStore.SetStoreCurrenciesCollection(currencyCollection);
         }
@@ -38,6 +42,7 @@ namespace CashRegisterAssignment.ChangeCalculator.Services
                 activeCurrency = (activeCurrencyName, _currencyStore.availableCurrencies[activeCurrencyName]);
             }catch(Exception ex)
             {
+                _logService.AddLog(IChangeCalculatorLogService<ChangeCalculator>.Level.Error, "Unable to set active currency. See exception details. ", ex);
                 throw new CurrencyDataNotPresentException($"Unable to set active currency. Error: {ex.Message}, {ex.InnerException}");
             }
             
@@ -72,6 +77,7 @@ namespace CashRegisterAssignment.ChangeCalculator.Services
                     if (!GetActiveCurrency().Denominations.Contains(item.Denomination))
                     {
                         isValid = false;
+                        _logService.AddLog(IChangeCalculatorLogService<ChangeCalculator>.Level.Error, "Currency Denomination not found.");
                         throw new IncorrectMoneyInputException($"Invalid cash input {item.Denomination}");
                     }
                 }

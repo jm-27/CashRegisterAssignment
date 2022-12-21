@@ -12,12 +12,12 @@ namespace CashRegisterAssignment.ChangeCalculator.Interfaces
     /// </summary>
     public interface IChangeCalculator
     {
-        public void SetCurrencyStoreCollection(List<KeyValuePair<string, List<decimal[]>>> currenciesCollection);
+        public void SetCurrencyStoreCollection(List<CurrencyItem> currenciesCollection);
         public void SetActiveCurrency(string activeCurrency);
         public string GetActiveCurrency();
         public string GetAcceptedCoinsAndBills();
 
-        public List<ICashAmount> SubmitCash(List<decimal> ItemsPrices, List<ICashAmount> cashAmounts);
+        public ICashWrapper SubmitCash(List<decimal> ItemsPrices, List<ICashAmount> cashAmounts);
 
 
     }

@@ -42,7 +42,16 @@ C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\bin\Debug\net7.0\M
 C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\bin\Debug\net7.0\Microsoft.Extensions.FileProviders.Abstractions.dll
 C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\bin\Debug\net7.0\Microsoft.Extensions.FileProviders.Physical.dll
 C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\bin\Debug\net7.0\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\bin\Debug\net7.0\Microsoft.Extensions.Logging.dll
+C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\bin\Debug\net7.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\bin\Debug\net7.0\Microsoft.Extensions.Logging.Configuration.dll
+C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\bin\Debug\net7.0\Microsoft.Extensions.Logging.Console.dll
+C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\bin\Debug\net7.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll
 C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\bin\Debug\net7.0\Microsoft.Extensions.Primitives.dll
+C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\bin\Debug\net7.0\Serilog.dll
+C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\bin\Debug\net7.0\Serilog.Extensions.Logging.dll
+C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\bin\Debug\net7.0\Serilog.Sinks.File.dll
 C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\obj\Debug\net7.0\CashRegisterAssignment.csproj.AssemblyReference.cache
 C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\obj\Debug\net7.0\CashRegisterAssignment.GeneratedMSBuildEditorConfig.editorconfig
 C:\repo\CashReg\CashRegisterAssignment\CashRegisterAssignment\obj\Debug\net7.0\CashRegisterAssignment.AssemblyInfoInputs.cache

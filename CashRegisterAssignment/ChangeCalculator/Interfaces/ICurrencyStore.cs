@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CashRegisterAssignment.ChangeCalculator.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,6 @@ namespace CashRegisterAssignment.ChangeCalculator.Interfaces
     public interface ICurrencyStore
     {
         public Dictionary<string, List<decimal>> availableCurrencies { get;  }
-        public void SetStoreCurrenciesCollection(List<KeyValuePair<string, List<decimal[]>>> currenciesCollection);
+        public void SetStoreCurrenciesCollection(List<CurrencyItem> currenciesCollection);
     }
 }

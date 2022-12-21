@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CashRegisterAssignment.ChangeCalculator.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace CashRegisterAssignment.ChangeCalculator.Interfaces
     {
         public List<ICashAmount> CashCollection { get; set; }
         public bool isValid { get; set; }
-        public void SetCurrencyStoreCollection(List<KeyValuePair<string, List<decimal[]>>> currencyCollection);
+        public void SetCurrencyStoreCollection(List<CurrencyItem> currencyCollection);
         public void SetActiveCurrency(string activeCurrencyName);
         public (string Name, List<decimal> Denominations) GetActiveCurrency();
 
